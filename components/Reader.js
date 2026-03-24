@@ -1,28 +1,60 @@
 import { Button, StyleSheet, Text, View } from 'react-native'
 import { useState } from 'react'
 import { CameraView, useCameraPermissions } from 'expo-camera'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { startArriving } from '../services/visitService';
 
 export default function Reader() {
     const [permission, requestPermission] = useCameraPermissions()
     const [scanned, setScanned] = useState(false)
 
-    if(!permission) return <View />
+    // if(!permission) return <View />
 
-    if(!permission.granted) {
-        return(
-            <View style={styles.container}>
-                <Text>Engedély szükséges a kamerához</Text>
-                <Button 
-                    title="Engedélyez"
-                    onPress={requestPermission}
-                />
-            </View>
-        )
+    // if(!permission.granted) {
+    //     return(
+    //         <View style={styles.container}>
+    //             <Text>Engedély szükséges a kamerához</Text>
+    //             <Button 
+    //                 title="Engedélyez"
+    //                 onPress={requestPermission}
+    //             />
+    //         </View>
+    //     )
+    // }
+
+    const updateArrived = async (data) => {
+        const host = 'http://localhost:8000/api/visits'
+        const url = host + '/' + data.id
+        let response = await fetch(url, {
+            method: "PUT",
+            body: JSON.stringify({
+                name: data.name,
+                email: data.email,
+                event_id: data.event_id,
+                arrived: true
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+    }
+
+    const startArriving = async () => {
+        const url = 'http://localhost:8000/api/visits'
+        let id = await AsyncStorage.getItem('rendiId')
+        console.log('id: ', id)
+        let response = await fetch(url + '/' + id)
+        let result = await response.json()
+        console.log(result.data.id == id)
+        if(result.data.id == id) {
+            updateArrived(result.data)
+        }
     }
 
     const handleBarcodeScanned = ({ type, data }) => {
         setScanned(true)
         alert('Üzenet: ' + data)
+        startArriving()
     }
 
   return (

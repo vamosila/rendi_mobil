@@ -2,14 +2,16 @@
 import { Button, StyleSheet, Text, View } from 'react-native'
 import Input from '../../components/Input'
 import { useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Reg = ( {navigation} ) => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [id, setId] = useState('')
 
-    function save() {
+    async function save() {
         console.log('Mentés...');
+
     }
 
   return (
