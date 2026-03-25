@@ -20,7 +20,7 @@ export default Input
 
 const styles = StyleSheet.create({
     container: {
-        border: '1px solid black',
+        // border: '1px solid black',
         margin: 3,
         padding: 3,
         borderRadius: 3,

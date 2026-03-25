@@ -16,15 +16,16 @@ const updateArrived = async (data) => {
         }
     })
 }
-
 const startArriving = async () => {
+    const host = 'http://localhost:8000/api/visits'
     let id = await AsyncStorage.getItem('rendiId')
-    const url = host + '/' + data.id
+
     console.log('id: ', id)
-    let response = await fetch(url)
+
+    let response = await fetch(host + '/' + id)
     let result = await response.json()
-    console.log(result.data.id == id)
-    if(result.data.id == id) {
+
+    if(result.data.id == Number(id)) {
         updateArrived(result.data)
     }
 }
@@ -45,7 +46,7 @@ const createVisit = async (visit) => {
         })
         let result = await response.json()
         console.log(result.data.id)
-        AsyncStorage.setItem('rendiId', result.data.id)
+        AsyncStorage.setItem('rendiId', String(result.data.id))
     } catch (error) {
         console.error('Hiba! A regisztráció sikertelen')
         console.error(error)

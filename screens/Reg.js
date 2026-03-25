@@ -1,8 +1,8 @@
 
 import { Button, StyleSheet, Text, View } from 'react-native'
-import Input from '../../components/Input'
+import Input from '../components/Input'
 import { useState } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createVisit } from '../services/visitService'
 
 const Reg = ( {navigation} ) => {
     const [name, setName] = useState('')
@@ -11,11 +11,16 @@ const Reg = ( {navigation} ) => {
 
     async function save() {
         console.log('Mentés...');
-
+        const visit = {
+            name: name,
+            email: email,
+        }
+        createVisit(visit)
+        navigation.navigate('Home')
     }
 
   return (
-    <View styles={styles.container}>
+    <View style={styles.container}>
       <Text>Regisztráció</Text>
       <Input 
         title="Nev"
@@ -27,7 +32,7 @@ const Reg = ( {navigation} ) => {
         onChangeText={(text) => setEmail(text)}
         value={email}
       />
-      <View styles={styles.button}>
+      <View style={styles.button}>
           <Button
             title="Mentés"
             onPress={() => save()}
@@ -45,8 +50,8 @@ const Reg = ( {navigation} ) => {
 export default Reg
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1
+container: {
+  flex: 1
     },
     button: {
         margin: 10

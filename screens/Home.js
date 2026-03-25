@@ -1,6 +1,6 @@
 
 import { Button, StyleSheet, Text, View } from 'react-native'
-import Reader from '../../components/Reader'
+import Reader from '../components/Reader'
 
 const Home = ( {navigation} ) => {
   return (

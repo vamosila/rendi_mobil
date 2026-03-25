@@ -39,18 +39,19 @@ export default function Reader() {
         })
     }
 
-    const startArriving = async () => {
-        const url = 'http://localhost:8000/api/visits'
-        let id = await AsyncStorage.getItem('rendiId')
-        console.log('id: ', id)
-        let response = await fetch(url + '/' + id)
-        let result = await response.json()
-        console.log(result.data.id == id)
-        if(result.data.id == id) {
-            updateArrived(result.data)
-        }
-    }
+    // const startArriving = async () => {
+    //     const url = 'http://localhost:8000/api/visits'
+    //     let id = await AsyncStorage.getItem('rendiId')
+    //     console.log('id: ', id)
+    //     let response = await fetch(url + '/' + id)
+    //     let result = await response.json()
+    //     console.log(result.data.id == id)
+    //     if(result.data.id == id) {
+    //         updateArrived(result.data)
+    //     }
+    // }
 
+    // startArriving()
     const handleBarcodeScanned = ({ type, data }) => {
         setScanned(true)
         alert('Üzenet: ' + data)
